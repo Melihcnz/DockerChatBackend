@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # MySQL veritabanı servisi
+  db:
+    image: mysql:8.0
+    container_name: social_media_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: social_media_db
+      MYSQL_USER: social_media_user
+      MYSQL_PASSWORD: social_media_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - social_media_network
+
+  # phpMyAdmin servisi
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: social_media_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - social_media_network
+
+  # Node.js API servisi
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: social_media_api
+    restart: always
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: social_media_user
+      DB_PASSWORD: social_media_password
+      DB_NAME: social_media_db
+      JWT_SECRET: your_jwt_secret_key_change_this_in_production
+      JWT_EXPIRES_IN: 24h
+    ports:
+      - "5000:5000"
+      - "8000:8000" # WebSocket port
+    depends_on:
+      - db
+    volumes:
+      - ./uploads:/app/uploads
+      - ./src:/app/src
+    networks:
+      - social_media_network
+
+# Docker kalıcı veri depolama birimleri
+volumes:
+  mysql_data:
+
+# Docker ağları
+networks:
+  social_media_network:
+    driver: bridge 

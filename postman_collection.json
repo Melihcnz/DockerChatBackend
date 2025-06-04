@@ -1,0 +1,905 @@
+{
+  "info": {
+    "_postman_id": "a8e5f5a9-7a0c-4d5e-9e8c-d5f9d3e0e3f5",
+    "name": "Social Media API",
+    "description": "Sosyal Medya Platformu API Koleksiyonu",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Kimlik Doğrulama",
+      "description": "Kullanıcı kaydı, girişi ve oturum yönetimi",
+      "item": [
+        {
+          "name": "Kullanıcı Kaydı",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"test_user\",\n  \"fullName\": \"Test Kullanıcı\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Yeni kullanıcı hesabı oluşturur"
+          }
+        },
+        {
+          "name": "Kullanıcı Girişi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Kullanıcı girişi yapar ve JWT token döndürür"
+          }
+        },
+        {
+          "name": "Mevcut Kullanıcı Bilgilerini Getir",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Oturum açmış kullanıcının bilgilerini getirir"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kullanıcılar",
+      "description": "Kullanıcı profili ve kullanıcı yönetimi",
+      "item": [
+        {
+          "name": "Kullanıcı Profili Getir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users/profile/{{username}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "profile",
+                "{{username}}"
+              ]
+            },
+            "description": "Belirli bir kullanıcının profilini getirir"
+          }
+        },
+        {
+          "name": "Kullanıcının Gönderilerini Getir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users/posts/{{username}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "posts",
+                "{{username}}"
+              ]
+            },
+            "description": "Belirli bir kullanıcının gönderilerini getirir"
+          }
+        },
+        {
+          "name": "Profil Güncelleme",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Yeni Ad Soyad",
+                  "type": "text"
+                },
+                {
+                  "key": "bio",
+                  "value": "Bu benim yeni biyografim",
+                  "type": "text"
+                },
+                {
+                  "key": "profileImage",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "profile"
+              ]
+            },
+            "description": "Kullanıcı profilini günceller"
+          }
+        },
+        {
+          "name": "Şifre Değiştirme",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/change-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "change-password"
+              ]
+            },
+            "description": "Kullanıcı şifresini değiştirir"
+          }
+        },
+        {
+          "name": "Kullanıcı Arama",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users/search?query={{search_query}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "{{search_query}}"
+                }
+              ]
+            },
+            "description": "Kullanıcı adına veya tam adına göre kullanıcıları arar"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gönderiler",
+      "description": "Gönderi oluşturma, görüntüleme, güncelleme ve silme",
+      "item": [
+        {
+          "name": "Tüm Gönderileri Getir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/posts?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Tüm gönderileri sayfalama ile getirir"
+          }
+        },
+        {
+          "name": "Gönderi Getir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/posts/{{postId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "{{postId}}"
+              ]
+            },
+            "description": "Belirli bir gönderiyi ID'ye göre getirir"
+          }
+        },
+        {
+          "name": "Gönderi Oluştur",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "content",
+                  "value": "Bu benim yeni gönderim!",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts"
+              ]
+            },
+            "description": "Yeni bir gönderi oluşturur"
+          }
+        },
+        {
+          "name": "Gönderi Güncelle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "content",
+                  "value": "Güncellenmiş gönderi içeriği",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/posts/{{postId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "{{postId}}"
+              ]
+            },
+            "description": "Var olan bir gönderiyi günceller"
+          }
+        },
+        {
+          "name": "Gönderi Sil",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/posts/{{postId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "{{postId}}"
+              ]
+            },
+            "description": "Bir gönderiyi siler (soft delete)"
+          }
+        },
+        {
+          "name": "Gönderi Beğen/Beğeniyi Geri Al",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/posts/{{postId}}/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "posts",
+                "{{postId}}",
+                "like"
+              ]
+            },
+            "description": "Gönderiyi beğenir veya beğeniyi geri alır"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Yorumlar",
+      "description": "Yorum oluşturma, görüntüleme, güncelleme ve silme",
+      "item": [
+        {
+          "name": "Gönderi Yorumlarını Getir",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/comments/post/{{postId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments",
+                "post",
+                "{{postId}}"
+              ]
+            },
+            "description": "Belirli bir gönderiye ait yorumları getirir"
+          }
+        },
+        {
+          "name": "Yorum Oluştur",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Bu harika bir gönderi!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/comments/post/{{postId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments",
+                "post",
+                "{{postId}}"
+              ]
+            },
+            "description": "Belirli bir gönderiye yeni bir yorum ekler"
+          }
+        },
+        {
+          "name": "Yorum Güncelle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Güncellenmiş yorum içeriği\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/comments/{{commentId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments",
+                "{{commentId}}"
+              ]
+            },
+            "description": "Var olan bir yorumu günceller"
+          }
+        },
+        {
+          "name": "Yorum Sil",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/comments/{{commentId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments",
+                "{{commentId}}"
+              ]
+            },
+            "description": "Bir yorumu siler (soft delete)"
+          }
+        },
+        {
+          "name": "Yorum Beğen/Beğeniyi Geri Al",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/comments/{{commentId}}/like",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "comments",
+                "{{commentId}}",
+                "like"
+              ]
+            },
+            "description": "Yorumu beğenir veya beğeniyi geri alır"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mesajlar",
+      "description": "Mesajlaşma ve konuşmalar",
+      "item": [
+        {
+          "name": "Konuşmaları Getir",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/messages/conversations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "messages",
+                "conversations"
+              ]
+            },
+            "description": "Kullanıcının tüm konuşmalarını getirir"
+          }
+        },
+        {
+          "name": "Okunmamış Mesaj Sayısı",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/messages/unread/count",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "messages",
+                "unread",
+                "count"
+              ]
+            },
+            "description": "Kullanıcının okunmamış mesaj sayısını getirir"
+          }
+        },
+        {
+          "name": "Mesaj Gönder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "receiverId",
+                  "value": "{{receiverId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Merhaba, nasılsın?",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/messages",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "messages"
+              ]
+            },
+            "description": "Başka bir kullanıcıya mesaj gönderir"
+          }
+        },
+        {
+          "name": "Kullanıcılar Arası Mesajları Getir",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/messages/{{otherUserId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "messages",
+                "{{otherUserId}}"
+              ]
+            },
+            "description": "İki kullanıcı arasındaki mesaj geçmişini getirir"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bildirimler",
+      "description": "Bildirim yönetimi",
+      "item": [
+        {
+          "name": "Bildirimleri Getir",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/notifications",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "notifications"
+              ]
+            },
+            "description": "Kullanıcının bildirimlerini getirir"
+          }
+        },
+        {
+          "name": "Okunmamış Bildirim Sayısı",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/notifications/unread/count",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "notifications",
+                "unread",
+                "count"
+              ]
+            },
+            "description": "Kullanıcının okunmamış bildirim sayısını getirir"
+          }
+        },
+        {
+          "name": "Bildirimi Okundu İşaretle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/notifications/{{notificationId}}/read",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "notifications",
+                "{{notificationId}}",
+                "read"
+              ]
+            },
+            "description": "Belirli bir bildirimi okundu olarak işaretler"
+          }
+        },
+        {
+          "name": "Tüm Bildirimleri Okundu İşaretle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/notifications/read-all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "notifications",
+                "read-all"
+              ]
+            },
+            "description": "Tüm bildirimleri okundu olarak işaretler"
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Burada ön istek işlemleri yapabilirsiniz"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Burada test işlemleri yapabilirsiniz",
+          "",
+          "// Login işlemi sonrası token değişkenini otomatik ayarla",
+          "if (pm.response.code === 200 && pm.request.url.toString().includes('/login')) {",
+          "    const responseJson = pm.response.json();",
+          "    ",
+          "    if (responseJson.token) {",
+          "        pm.environment.set('token', responseJson.token);",
+          "        console.log('Token kaydedildi');",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "username",
+      "value": "test_user"
+    },
+    {
+      "key": "postId",
+      "value": "1"
+    },
+    {
+      "key": "commentId",
+      "value": "1"
+    },
+    {
+      "key": "receiverId",
+      "value": "2"
+    },
+    {
+      "key": "otherUserId",
+      "value": "2"
+    },
+    {
+      "key": "notificationId",
+      "value": "1"
+    },
+    {
+      "key": "search_query",
+      "value": "test"
+    }
+  ]
+} 
