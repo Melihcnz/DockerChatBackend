@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Bağımlılıkları yükle
-RUN npm install --force
+RUN npm install
 
 # Uygulamanın geri kalanını kopyala
 COPY . .
