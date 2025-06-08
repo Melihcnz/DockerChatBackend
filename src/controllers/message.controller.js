@@ -12,7 +12,8 @@ exports.getConversations = async (req, res) => {
       attributes: [
         [sequelize.fn('MAX', sequelize.col('id')), 'lastMessageId'],
         [sequelize.fn('MAX', sequelize.col('senderId')), 'senderId'],
-        [sequelize.fn('MAX', sequelize.col('receiverId')), 'receiverId']
+        [sequelize.fn('MAX', sequelize.col('receiverId')), 'receiverId'],
+        [sequelize.fn('MAX', sequelize.col('createdAt')), 'lastMessageTime']
       ],
       where: {
         [Op.or]: [
@@ -32,7 +33,7 @@ exports.getConversations = async (req, res) => {
           sequelize.col('receiverId')
         )
       ],
-      order: [['createdAt', 'DESC']]
+      order: [[sequelize.fn('MAX', sequelize.col('createdAt')), 'DESC']]
     });
     
     // Konuşma listesini detaylandır
