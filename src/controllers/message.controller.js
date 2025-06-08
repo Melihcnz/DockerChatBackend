@@ -11,8 +11,8 @@ exports.getConversations = async (req, res) => {
     const conversations = await Message.findAll({
       attributes: [
         [sequelize.fn('MAX', sequelize.col('id')), 'lastMessageId'],
-        'senderId',
-        'receiverId'
+        [sequelize.fn('MAX', sequelize.col('senderId')), 'senderId'],
+        [sequelize.fn('MAX', sequelize.col('receiverId')), 'receiverId']
       ],
       where: {
         [Op.or]: [
